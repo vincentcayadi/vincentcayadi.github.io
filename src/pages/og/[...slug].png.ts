@@ -3,11 +3,11 @@ import { html } from "satori-html";
 import { Resvg } from "@resvg/resvg-js";
 import { readFile } from "node:fs/promises";
 import { getCollection } from "astro:content";
-import type { APIContext } from "astro";
+import type { APIContext, GetStaticPaths, GetStaticPathsItem } from "astro";
 
 const dimensions = {
-  width: 1200,
-  height: 630,
+  width: 800,
+  height: 400,
 };
 
 interface Props {
@@ -55,16 +55,24 @@ export async function GET(context: APIContext) {
   });
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getCollection("blog");
-  const paths = posts.map((post) => {
-    const slug = post.id.replace(/\/index\.md$/, "");
+  const paths: GetStaticPathsItem[] = posts.map((post) => {
     return {
-      params: { slug },
+      params: { slug: `blog/${post.slug}` },
       props: {
         title: post.data.title,
       },
     };
   });
+
+  // Add static paths for general pages if needed
+  paths.push({
+    params: { slug: "blog" },
+    props: {
+      title: "Blogs",
+    },
+  });
+
   return paths;
-}
+};

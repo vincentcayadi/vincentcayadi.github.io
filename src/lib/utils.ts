@@ -48,5 +48,5 @@ export const getOgImagePath = (filename: string = defaultMeta.title) => {
 
   if (filename === "") filename = defaultMeta.title;
 
-  return `./image/${filename}.png`;
+  return `./og/${filename}.png`;
 };
