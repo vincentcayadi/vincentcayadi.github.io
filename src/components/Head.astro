@@ -9,18 +9,26 @@ import inter600 from "@fontsource/inter/files/inter-latin-600-normal.woff2";
 import lora400 from "@fontsource/lora/files/lora-latin-400-normal.woff2";
 import lora600 from "@fontsource/lora/files/lora-latin-600-normal.woff2";
 import { ViewTransitions } from "astro:transitions";
+import { defaultMeta } from "@consts";
+import { getOgImagePath } from "@lib/utils";
 
 interface Props {
   title: string;
   description: string;
-  image?: string;
+  ogImage?: {
+    src: string;
+    alt: string;
+  };
 }
 
-const { title, description, image = "/nano.png" } = Astro.props;
-
+const {
+  title = defaultMeta.title,
+  description = defaultMeta.description,
+  ogImage = defaultMeta.ogImage,
+} = Astro.props;
 // Dynamically set the Open Graph image URL based on the image or default
-const ogImageURL = new URL(image, Astro.site).href;
-
+const ogImageURL = new URL(getOgImagePath(Astro.url.pathname), Astro.url.origin)
+  .href;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 ---
 

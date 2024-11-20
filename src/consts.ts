@@ -1,4 +1,4 @@
-import type { Site, Metadata, Socials } from "@types";
+import type { Site, Metadata } from "@types";
 
 export const SITE: Site = {
   NAME: "Vincent Cayadi",
@@ -14,4 +14,14 @@ export const HOME: Metadata = {
 export const BLOG: Metadata = {
   TITLE: "Blog",
   DESCRIPTION: "A collection of articles on topics I am passionate about.",
+};
+
+export const defaultMeta = {
+  title: "Vincent Cayadi",
+  description: "Vincent Cayadi",
+  ogImage: {
+    src: "/images/banner.webp",
+    alt: "Vincent Cayadi",
+  },
+  wesbite: "https://senrobo.github.io",
 };
