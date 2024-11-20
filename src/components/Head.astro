@@ -79,7 +79,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
 <meta property="twitter:url" content={Astro.url} />
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
-<meta property="twitter:image" content={ogImageURL} />
+<meta
+  property="twitter:image"
+  content={ogImage?.src || new URL(ogImageURL, Astro.url)}
+/>
 
 <ViewTransitions />
 
