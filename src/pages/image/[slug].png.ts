@@ -1,8 +1,7 @@
 import satori from "satori";
 import { html } from "satori-html";
 import { Resvg } from "@resvg/resvg-js";
-import InterRegular from "@fontsource/inter/files/inter-latin-400-normal.woff";
-import InterBold from "@fontsource/inter/files/inter-latin-700-normal.woff";
+import { readFile } from "node:fs/promises";
 import { getCollection } from "astro:content";
 import type { APIContext } from "astro";
 
@@ -33,14 +32,8 @@ export async function GET(context: APIContext) {
     fonts: [
       {
         name: "Inter",
-        data: Buffer.from(InterRegular),
+        data: await readFile("./src/font/Inter-Bold.ttf"),
         weight: 400,
-        style: "normal",
-      },
-      {
-        name: "Inter",
-        data: Buffer.from(InterBold),
-        weight: 700,
         style: "normal",
       },
     ],
@@ -67,9 +60,7 @@ export async function getStaticPaths() {
   const paths = posts.map((post) => {
     const slug = post.id.replace(/\/index\.md$/, "");
     return {
-      params: {
-        slug: slug,
-      },
+      params: { slug },
       props: {
         title: post.data.title,
       },
