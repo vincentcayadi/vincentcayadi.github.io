@@ -21,7 +21,7 @@ export async function GET(context: APIContext) {
     tw="flex w-full h-full h-screen text-left bg-stone-200"
   >
     <h2 tw="flex flex-col text-gray-900 text-left self-end px-4">
-      <span tw="font-bold tracking-tight text-3xl text-stone-900"
+      <span tw="font-bold tracking-tight text-5xl text-stone-900"
         >${title}</span
       >
       <span tw="text-stone-600">Vincent Cayadi</span>
