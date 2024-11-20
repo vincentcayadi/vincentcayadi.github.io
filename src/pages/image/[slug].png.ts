@@ -35,11 +35,13 @@ export async function GET(context: APIContext) {
         name: "Inter",
         data: Buffer.from(InterRegular),
         weight: 400,
+        style: "normal",
       },
       {
         name: "Inter",
         data: Buffer.from(InterBold),
         weight: 700,
+        style: "normal",
       },
     ],
     height: dimensions.height,
