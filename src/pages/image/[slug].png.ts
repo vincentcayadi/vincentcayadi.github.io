@@ -63,9 +63,10 @@ export async function GET(context: APIContext) {
 export async function getStaticPaths() {
   const posts = await getCollection("blog");
   const paths = posts.map((post) => {
+    const slug = post.id.replace(/\/index\.md$/, "");
     return {
       params: {
-        slug: post.id,
+        slug: slug,
       },
       props: {
         title: post.data.title,
