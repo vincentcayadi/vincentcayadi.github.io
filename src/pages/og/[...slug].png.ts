@@ -39,7 +39,7 @@ export async function GET(context: APIContext) {
     fonts: [
       {
         name: "Inter",
-        data: await readFile("./src/font/Inter-Bold.ttf"),
+        data: await readFile("./src/font/Helvetica-Bold-Font.ttf"),
         weight: 400,
         style: "normal",
       },
