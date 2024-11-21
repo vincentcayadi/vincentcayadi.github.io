@@ -17,16 +17,23 @@ interface Props {
 export async function GET(context: APIContext) {
   const { title } = context.props as Props;
 
-  const markup = html` <div
-    tw="flex w-full h-full h-screen text-left bg-stone-200"
+  const markup = html`
+  <div
+    tw="flex w-full h-full h-screen text-left bg-stone-200"   style={{
+
+    backgroundColor: 'white',
+    backgroundImage: 'radial-gradient(circle at 25px 25px, lightgray 2%, transparent 0%), radial-gradient(circle at 75px 75px, lightgray 2%, transparent 0%)',
+    backgroundSize: '100px 100px',
+  }}
   >
-    <h2 tw="flex flex-col text-gray-900 text-left self-end px-4">
-      <span tw="font-bold tracking-tight text-5xl text-stone-900"
-        >${title}</span
+    <h2 tw="flex flex-col text-gray-900 text-left self-end px-8 py-2">
+      <span tw="font-bold tracking-tighter text-5xl text-stone-900 py-2"
+        >Homography Transformation Matrix</span
       >
-      <span tw="text-stone-600">Vincent Cayadi</span>
+      <span tw="text-stone-600 text-3xl">Vincent Cayadi</span>
     </h2>
-  </div>`;
+  </div>
+  `;
 
   const svg = await satori(markup, {
     fonts: [
