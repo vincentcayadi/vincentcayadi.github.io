@@ -132,6 +132,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site).href;
     document.addEventListener("scroll", onScroll);
   }
 
+  function animate() {
+    const animateElements = document.querySelectorAll(".animate");
+
+    animateElements.forEach((element, index) => {
+      setTimeout(() => {
+        element.classList.add("show");
+      }, index * 150);
+    });
+  }
+
   function onScroll() {
     if (window.scrollY > 0) {
       document.documentElement.classList.add("scrolled");
