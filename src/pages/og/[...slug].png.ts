@@ -28,7 +28,7 @@ export async function GET(context: APIContext) {
   >
     <h2 tw="flex flex-col text-gray-900 text-left self-end px-8 py-2">
       <span tw="font-bold tracking-tighter text-5xl text-stone-900 py-2"
-        >Homography Transformation Matrix</span
+        >${title}</span
       >
       <span tw="text-stone-600 text-3xl">Vincent Cayadi</span>
     </h2>
