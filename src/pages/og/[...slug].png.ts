@@ -4,6 +4,7 @@ import { Resvg } from "@resvg/resvg-js";
 import { readFile } from "node:fs/promises";
 import { getCollection } from "astro:content";
 import type { APIContext, GetStaticPaths, GetStaticPathsItem } from "astro";
+import { defaultMeta } from "@consts";
 
 const dimensions = {
   width: 800,
@@ -18,21 +19,14 @@ export async function GET(context: APIContext) {
   const { title } = context.props as Props;
 
   const markup = html`
-  <div
-    tw="flex w-full h-full h-screen text-left bg-stone-200"   style={{
-
-    backgroundColor: 'white',
-    backgroundImage: 'radial-gradient(circle at 25px 25px, lightgray 2%, transparent 0%), radial-gradient(circle at 75px 75px, lightgray 2%, transparent 0%)',
-    backgroundSize: '100px 100px',
-  }}
-  >
-    <h2 tw="flex flex-col text-gray-900 text-left self-end px-8 py-2">
-      <span tw="font-bold tracking-tighter text-5xl text-stone-900 py-2"
-        >${title}</span
-      >
-      <span tw="text-stone-600 text-3xl">Vincent Cayadi</span>
-    </h2>
-  </div>
+    <div tw="flex w-full h-full h-screen text-left bg-stone-200">
+      <h2 tw="flex flex-col text-gray-900 text-left self-end px-8 py-2">
+        <span tw="font-bold tracking-tighter text-5xl text-stone-900 py-2"
+          >${title}</span
+        >
+        <span tw="text-stone-600 text-3xl">Vincent Cayadi</span>
+      </h2>
+    </div>
   `;
 
   const svg = await satori(markup, {
@@ -73,13 +67,20 @@ export const getStaticPaths: GetStaticPaths = async () => {
     };
   });
 
-  // Add static paths for general pages if needed
-  paths.push({
-    params: { slug: "blog" },
-    props: {
-      title: "Blogs",
+  paths.push(
+    {
+      params: { slug: "blog" },
+      props: {
+        title: "Blogs",
+      },
     },
-  });
+    {
+      params: { slug: `${defaultMeta.title}` },
+      props: {
+        title: "Home",
+      },
+    }
+  );
 
   return paths;
 };
