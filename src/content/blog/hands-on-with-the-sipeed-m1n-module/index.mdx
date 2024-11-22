@@ -4,6 +4,7 @@ description: Is this THE potential OpenMV killer?
 date: Nov 20 2024
 draft: true
 ---
+
 ## Introduction
 
 While researching for the **2025 RoboCup Junior Soccer Open**, I aimed to build a vision system with four cameras, each positioned 90 degrees apart, to provide full 360° field coverage. This required finding a camera module that was compact, affordable, and capable of meeting the following criteria:
@@ -15,7 +16,7 @@ While researching for the **2025 RoboCup Junior Soccer Open**, I aimed to build 
 ### Initial Considerations
 
 1. **Raspberry Pi Camera**  
-    To use the Raspberry Pi camera, I would need a [CM4](https://detail.tmall.com/item.htm?id=630988806835&_u=m30vu5iq2a0a) and its [expansion board](https://item.taobao.com/item.htm?id=670426091412&_u=m30vu5iq4b54), along with the [camera module](https://detail.tmall.com/item.htm?_u=m30vu5iqabca&id=611631113188). While this setup is undeniably powerful, it would involve installing a bare-metal Linux system (likely Arch Linux without a GUI) with OpenCV. Interfacing would rely on an Ethernet port, which adds unnecessary complexity. Beyond the high setup effort, this solution would also consume significant power and generate heat, making it unsuitable for a system requiring four cameras. Moreover, the high FPS output is unnecessary for my use case.
+   To use the Raspberry Pi camera, I would need a [CM4](https://detail.tmall.com/item.htm?id=630988806835&_u=m30vu5iq2a0a) and its [expansion board](https://item.taobao.com/item.htm?id=670426091412&_u=m30vu5iq4b54), along with the [camera module](https://detail.tmall.com/item.htm?_u=m30vu5iqabca&id=611631113188). While this setup is undeniably powerful, it would involve installing a bare-metal Linux system (likely Arch Linux without a GUI) with OpenCV. Interfacing would rely on an Ethernet port, which adds unnecessary complexity. Beyond the high setup effort, this solution would also consume significant power and generate heat, making it unsuitable for a system requiring four cameras. Moreover, the high FPS output is unnecessary for my use case.
 
 ### Finding the Sipeed M1n Module
 
@@ -31,12 +32,12 @@ Upon closer inspection, the Sipeed M1n camera looked strikingly similar to the O
 
 Here’s a comparison of the Sipeed M1n Module and OpenMV H7:
 
-|Feature|Sipeed M1n Module|OpenMV H7|
-|---|---|---|
-|**Cost (USD)**|$13.90|$79.90|
-|**Processor (and clock speed)**|K210 AI chip (400 MHz)|STM32H743 (480 MHz)|
-|**Flash Storage**|16 MB|32 MB External + 2 MB Internal|
-|**RAM**|8 MB|32 MB (SDRAM) + 1 MB SRAM|
+| Feature                         | Sipeed M1n Module      | OpenMV H7                      |
+| ------------------------------- | ---------------------- | ------------------------------ |
+| **Cost (USD)**                  | $13.90                 | $79.90                         |
+| **Processor (and clock speed)** | K210 AI chip (400 MHz) | STM32H743 (480 MHz)            |
+| **Flash Storage**               | 16 MB                  | 32 MB External + 2 MB Internal |
+| **RAM**                         | 8 MB                   | 32 MB (SDRAM) + 1 MB SRAM      |
 
 Although the Sipeed M1n Module has a slightly lower clock speed and less memory, its affordability and simplicity make it an appealing choice for my project. Since my algorithm doesn’t require AI capabilities, the module's raw processing power is sufficient to handle the object detection tasks for RoboCup Junior Soccer Open.
 
@@ -46,10 +47,14 @@ Navigating the Sipeed website and its documentation was an absolute nightmare. T
 
 To make matters worse, the documentation provided zero clarity on the pinouts or their specific functions. I had to cross-reference multiple sources to figure out the basics. And don’t even get me started on the MaixPy IDE documentation—it was so poorly written that I initially didn’t even realize it supported macOS, which almost led me to abandon the camera altogether.
 
-<figure> <img src="sipeed-downloads-page.png" /> <figcaption>Nightmarish Downloads Site</figcaption> </figure>
+<figure>
+  {" "}
+  <img src="/src/content/blog/hands-on-with-the-sipeed-m1n-module/sipeed-downloads-page.png" />{" "}
+  <figcaption>Nightmarish Downloads Site</figcaption>{" "}
+</figure>
 
 Want the links to the site? Nope. Go hunt them down yourself and experience the chaos firsthand
 
 ## Testing The Camera
 
-Since FPS is the main important thing about using a new camera. i will just only test it via the fps metrics by how it runs when there is multiple objects ontop of trying to process the distances other stuff. 
+Since FPS is the main important thing about using a new camera. i will just only test it via the fps metrics by how it runs when there is multiple objects ontop of trying to process the distances other stuff.

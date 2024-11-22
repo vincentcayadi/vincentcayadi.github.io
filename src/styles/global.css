@@ -42,6 +42,14 @@ article {
   @apply prose-headings:text-black prose-headings:dark:text-white;
 }
 
+figure img {
+  @apply w-full h-auto rounded-sm;
+}
+
+figcaption {
+  @apply text-xs text-center text-black/50 dark:text-white/50 font-serif;
+}
+
 @layer utilities {
   article a {
     @apply font-sans text-current underline underline-offset-2;
