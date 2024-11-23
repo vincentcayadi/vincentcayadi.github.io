@@ -3,6 +3,7 @@ import type { Site, Metadata } from "@types";
 export const SITE: Site = {
   NAME: "Vincent Cayadi",
   EMAIL: "202483j@student.hci.edu.sg",
+  NUM_POSTS_ON_HOMEPAGE: 3,
 };
 
 export const HOME: Metadata = {
