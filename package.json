@@ -32,6 +32,7 @@
     "eslint": "^8.57.0",
     "eslint-plugin-astro": "^0.32.0",
     "eslint-plugin-jsx-a11y": "^6.8.0",
+    "lucide-astro": "^0.479.0",
     "pnpm": "^9.14.2",
     "resvg": "^1.6.4",
     "satori": "^0.12.0",
