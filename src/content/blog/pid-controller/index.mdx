@@ -226,6 +226,37 @@ _integral = constrain(_integral, -_maxi, _maxi);
 
 This constrains the integral to a maximum value, preventing runaway accumulation.
 
+So you might be wondering what if I do not control my windup?
+
+Imagine your drone with its altitude controller. The PID controller has a setpoint of 300m, but you're holding it on the ground at 0m. Here's what happens without windup protection:
+
+1. The controller sees a massive error: 300m - 0m = 300m
+2. The P term immediately wants to apply maximum thrust
+3. The D term is initially zero (no change in error yet)
+
+With each passing millisecond, that 300m error gets added to the integral sum. The drone's motors are spinning frantically, but since you're holding it, it can't move upward. The integral term keeps growing and growing, like winding up a spring tighter and tighter.
+
+Then the moment you release the drone:
+
+- It has this enormous accumulated integral term
+- The motors are already at maximum power from the P term
+- The I term is now pushing the controller to maintain maximum thrust far longer than it should
+- The drone rockets upward, overshooting the 300m target dramatically
+- By the time the P term starts to apply negative correction (when it passes 300m), the accumulated I term is still commanding "go up, go up, go up!"
+
+This is exactly like a wind-up toy that's been wound too tightly - when released, it spins wildly out of control before eventually settling down.
+
+Without anti-windup protection, this behavior creates:
+
+- Dangerous overshoots
+- Oscillations that take a long time to dampen
+- Potential instability
+- In extreme cases, system failure (a drone that can't stabilize might crash)
+
+The anti-windup protection in the code (constraining the integral to a maximum value) prevents this by essentially saying, "No matter how long the error persists, we're going to limit how much 'energy' gets stored in the integral term." It's like having a safety mechanism that prevents the spring from being wound too tightly.
+
+This is particularly important for systems like drones, robots, or any application where the actuators might temporarily be unable to affect the controlled variable - whether because of physical constraints (like you holding the drone), saturation limits (motors already at max power), or external disturbances (wind pushing against movement).
+
 ### 2. Setpoint Ramping
 
 Instead of immediately jumping to a new setpoint, this controller can gradually transition:
@@ -253,59 +284,23 @@ This ensures the controller doesn't run too frequently, which is important for s
 The code includes commented-out logic for handling angular values (like compass headings):
 
 ```cpp
-// // Correct for errors that are angles
-// if (isAngle) {
-//     // If it goes beyond ±180º ∓ 90º, we try correcting in the other
-//     // direction instead of going all the way around
-//     if (error > 270.0F) {
-//         error = -90.0F;
-//         reset();
-//     } else if (error < -270.0F) {
-//         error = 90.0F;
-//         reset();
-//     }
-// }
+ // Correct for errors that are angles
+ if (isAngle) {
+     // If it goes beyond ±180º ∓ 90º, we try correcting in the other
+     // direction instead of going all the way around
+     if (error > 270.0F) {
+         error = -90.0F;
+         reset();
+     } else if (error < -270.0F) {
+         error = 90.0F;
+         reset();
+     }
+ }
 ```
 
 When working with angles, the shortest path between two points might involve crossing the 0°/360° boundary. This logic would help find that shortest path.
 
-Do note that this is untested and thats why its commented
-
-## Using the Velocity Scaling PID Controller
-
-### Basic Usage
-
-```cpp
-// Create a PID controller with setpoint 100, output limits 0-255,
-// and gains Kp=1.0, Ki=0.1, Kd=0.05
-PIDController myPID(100.0, 0.0, 255.0, 1.0, 0.1, 0.05);
-
-void loop() {
-  // Read the current value from a sensor
-  double currentValue = readSensor();
-  
-  // Get the current velocity (for scaling)
-  double velocity = getVelocity();
-  double scaler = velocity / 300.0; // Normalized to tuning velocity
-  
-  // Calculate the control output with velocity scaling
-  double output = myPID.advance(currentValue, scaler);
-  
-  // Apply the control output
-  setActuator(output);
-}
-```
-
-### Tuning Best Practices
-
-1. **Start with P-only**: Set Ki and Kd to zero, and gradually increase Kp until you get a reasonable response time but with some oscillation.
-    
-2. **Add I term**: Gradually increase Ki until steady-state errors are eliminated, but not so much that you get significant overshoot.
-    
-3. **Add D term**: Finally, add in Kd to reduce overshoot and dampen oscillations.
-    
-4. **Tune at a specific velocity**: This implementation is designed to be tuned at a specific reference velocity (e.g., 300 in our comments), and it will automatically scale for other velocities.
-    
+Do note that this is untested and use it at your own will.
 
 ## Conclusion
 
@@ -313,12 +308,8 @@ This velocity-scaling PID controller is a powerful tool for systems that operate
 
 The implementation includes many practical features like anti-windup protection, setpoint ramping, and minimum update time, making it robust for real-world applications. The debug output capabilities also make it easier to tune and troubleshoot.
 
-Whether you're building a robot, a drone, or any system that needs precise control at varying speeds, this PID controller provides a solid foundation to build upon.
-
 ## Further Reading
 
 - [Understanding PID Control](https://www.ni.com/en/shop/labview/pid-theory-explained.html)
 - [PID Tuning Methods](https://en.wikipedia.org/wiki/PID_controller#Manual_tuning)
 - [Anti-windup Techniques](https://en.wikipedia.org/wiki/Integral_windup)
-
-Happy controlling!
