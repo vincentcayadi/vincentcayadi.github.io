@@ -6,6 +6,7 @@ tags:
   - robotics
 draft: false
 ---
+
 ## Introduction
 
 PID (Proportional, Integral, Derivative) controllers are the workhorses of control systems. They're used in everything from temperature control in your home to autonomous drones and industrial robots. In this post, we'll explore a particularly interesting implementation: a PID controller with velocity scaling, allowing the controller to automatically adapt to different speeds.
@@ -109,7 +110,7 @@ double PIDController::advance(const double input, const double scaler,
     // Update integral term with anti-windup
     _integral += error * dt;
     _integral = constrain(_integral, -_maxi, _maxi);
-    
+
     // Calculate PID terms with velocity scaling
     const auto p = (_kp * scaler) * error;
     const auto i = (_ki * _kp / dt * scaler) * _integral;
@@ -143,7 +144,7 @@ This is where the magic happens. Let's break it down:
 7. **Output limiting**: Ensure the output stays within bounds
 8. **State updates**: Store values for the next iteration
 
-### The Velocity Scaling Magic
+### Velocity Scaling
 
 The most interesting aspect of this implementation is how it handles velocity scaling through the `scaler` parameter:
 
@@ -160,6 +161,19 @@ This scaling allows the controller to automatically adjust its behavior based on
 - **D term**: Scales with the square of velocity (scaler²)
 
 Think of this like steering sensitivity in a car that automatically adjusts with speed. At high speeds, the proportional and integral terms increase linearly, but the derivative term increases exponentially to prevent oscillations.
+
+#### Example Decalration Of The Scaler
+
+```cpp
+void Movement::drive() {
+    // Scale the controller output linearly to velocity with a reference
+    // velocity of 300 (we tune it at that)
+    auto scaler = velocity == 0 ? HEADING_STATIONARY_SCALER : velocity / 300;
+    const auto angularVelocity =
+        headingController.advance(actualHeading, scaler, true);
+    const auto angular = 0.25 * angularVelocity;
+}
+```
 
 ### Supporting Functions
 
