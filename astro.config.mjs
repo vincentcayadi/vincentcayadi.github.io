@@ -6,7 +6,7 @@ import tailwind from "@astrojs/tailwind";
 export default defineConfig({
   markdown: {
     shikiConfig: {
-      theme: "kanagawa-dragon",
+      themes: { light: "min-light", dark: "	kanagawa-dragon" },
     },
   },
   site: "https://vincentcayadi.github.io/",
