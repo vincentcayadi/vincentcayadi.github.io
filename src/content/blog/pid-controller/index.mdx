@@ -28,7 +28,7 @@ Now, let's examine our velocity-scaling PID controller implementation:
 
 ### Class Definition
 
-```cpp title="PIDController.h"
+```cpp
 class PIDController {
   public:
     PIDController(const double setpoint, const double min, const double max,
@@ -66,7 +66,7 @@ The constructor takes several parameters:
 
 ### Constructor Implementation
 
-```cpp title="PIDController.cpp"
+```cpp
 PIDController::PIDController(const double targetSetpoint, const double min,
                              const double max, const double kp, const double ki,
                              const double kd, const uint32_t minDt,
@@ -80,7 +80,7 @@ The constructor initializes all the controller parameters. Note how it handles t
 
 ### The Core Algorithm: advance()
 
-```cpp title="PIDController.cpp"
+```cpp
 double PIDController::advance(const double input, const double scaler,
                               const bool isAngle) {
     // Handle first iteration and invalid inputs
