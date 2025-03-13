@@ -28,7 +28,7 @@ Now, let's examine our velocity-scaling PID controller implementation:
 
 ### Class Definition
 
-```cpp
+```cpp title="PIDController.h"
 class PIDController {
   public:
     PIDController(const double setpoint, const double min, const double max,
@@ -66,7 +66,7 @@ The constructor takes several parameters:
 
 ### Constructor Implementation
 
-```cpp
+```cpp title="PIDController.cpp"
 PIDController::PIDController(const double targetSetpoint, const double min,
                              const double max, const double kp, const double ki,
                              const double kd, const uint32_t minDt,
@@ -80,7 +80,7 @@ The constructor initializes all the controller parameters. Note how it handles t
 
 ### The Core Algorithm: advance()
 
-```cpp
+```cpp title="PIDController.cpp"
 double PIDController::advance(const double input, const double scaler,
                               const bool isAngle) {
     // Handle first iteration and invalid inputs
@@ -163,7 +163,7 @@ Think of this like steering sensitivity in a car that automatically adjusts with
 
 ### Supporting Functions
 
-```cpp
+```cpp title="PIDController.cpp"
 void PIDController::reset() {
     _integral = 0.0F;
     _lastError = 0.0F;
@@ -198,7 +198,7 @@ These utility functions allow for:
 
 ### Debugging Support
 
-```cpp
+```cpp title="PIDController.cpp"
 void PIDController::debugPrint(const char *name, Stream &serial) {
     const auto printdouble = [&serial](const double value) {
         serial.printf("%5d.%02d", (int)value, abs((int)(value * 100) % 100));
