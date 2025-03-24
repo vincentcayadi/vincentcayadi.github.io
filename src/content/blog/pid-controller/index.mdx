@@ -1,6 +1,6 @@
 ---
 title: PID Controllers
-description: A Comprehensive Guide with Velocity Scaling
+description: Custom PID Class Implementation
 date: Mar 13 2025
 tags:
   - robotics
@@ -154,13 +154,7 @@ const auto i = (_ki * _kp / dt * scaler) * _integral;
 const auto d = (_kd * _kp * dt * powf(scaler, 2)) * (error - _lastError) / dt;
 ```
 
-This scaling allows the controller to automatically adjust its behavior based on system velocity:
-
-- **P term**: Scales linearly with velocity (scaler)
-- **I term**: Also scales linearly
-- **D term**: Scales with the square of velocity (scaler²)
-
-Think of this like steering sensitivity in a car that automatically adjusts with speed. At high speeds, the proportional and integral terms increase linearly, but the derivative term increases exponentially to prevent oscillations.
+This scaling allows the controller to automatically adjust its behavior based on system velocity.
 
 #### Example Decalration Of The Scaler
 
@@ -175,8 +169,6 @@ void Movement::drive() {
 }
 ```
 
-
-
 ## Anti-Windup Protection
 
 The integral term in PID controllers can accumulate error indefinitely, causing "windup" that leads to large overshoots. Our implementation prevents this:
@@ -188,7 +180,7 @@ _integral = constrain(_integral, -_maxi, _maxi);
 
 This constrains the integral to a maximum value, preventing runaway accumulation.
 
-So you might be wondering what if I do not control my windup?
+So you might be wondering what if I do not control my Integral?
 
 Imagine your drone with its altitude controller. The PID controller has a setpoint of 300m, but you're holding it on the ground at 0m. Here's what happens without windup protection:
 
