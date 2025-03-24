@@ -175,61 +175,9 @@ void Movement::drive() {
 }
 ```
 
-### Supporting Functions
 
-```cpp title="PIDController.cpp"
-void PIDController::reset() {
-    _integral = 0.0F;
-    _lastError = 0.0F;
-    _lastTime = 0;
-    _lastOutput = 0.0F;
-    _justStarted = true;
-}
 
-void PIDController::updateSetpoint(const double value) {
-    if (!std::isnan(value)) _targetSetpoint = value;
-}
-
-void PIDController::updateLimits(const double min, const double max) {
-    _min = min;
-    _max = max;
-}
-
-void PIDController::updateGains(const double kp, const double ki,
-                                const double kd) {
-    _kp = kp;
-    _ki = ki;
-    _kd = kd;
-}
-```
-
-These utility functions allow for:
-
-- Resetting the controller state
-- Updating the target setpoint
-- Changing the output limits
-- Modifying the PID gains during operation
-
-### Debugging Support
-
-```cpp title="PIDController.cpp"
-void PIDController::debugPrint(const char *name, Stream &serial) {
-    const auto printdouble = [&serial](const double value) {
-        serial.printf("%5d.%02d", (int)value, abs((int)(value * 100) % 100));
-    };
-
-    if (name != nullptr) serial.printf("[%s] ", name);
-    serial.printf("Setpoint: ");
-    printdouble(_targetSetpoint);
-    // ... more debug output ...
-}
-```
-
-The `debugPrint` method provides comprehensive debugging information, printing all the internal state to a serial port. This is invaluable during tuning and troubleshooting.
-
-## Key Features and Design Decisions
-
-### 1. Anti-Windup Protection
+## Anti-Windup Protection
 
 The integral term in PID controllers can accumulate error indefinitely, causing "windup" that leads to large overshoots. Our implementation prevents this:
 
@@ -271,31 +219,9 @@ The anti-windup protection in the code (constraining the integral to a maximum v
 
 This is particularly important for systems like drones, robots, or any application where the actuators might temporarily be unable to affect the controlled variable - whether because of physical constraints (like you holding the drone), saturation limits (motors already at max power), or external disturbances (wind pushing against movement).
 
-### 2. Setpoint Ramping
+## Special Handling for Angular Values (Experimental 🧪)
 
-Instead of immediately jumping to a new setpoint, this controller can gradually transition:
-
-```cpp
-const auto dsetpoint = constrain(_targetSetpoint - _setpoint,
-                                 -_maxSetpointChange, _maxSetpointChange);
-_setpoint += dsetpoint;
-```
-
-This is like gradually pressing the accelerator in your car rather than slamming it down, providing smoother transitions.
-
-### 3. Minimum Update Time
-
-To prevent excessive updates that might lead to instability:
-
-```cpp
-if (micros() - _lastTime < _minDt) return _lastOutput;
-```
-
-This ensures the controller doesn't run too frequently, which is important for systems with fast sampling rates.
-
-### 4. Special Handling for Angular Values
-
-The code includes commented-out logic for handling angular values (like compass headings):
+The code includes logic for handling angular values (like compass headings):
 
 ```cpp
  // Correct for errors that are angles
