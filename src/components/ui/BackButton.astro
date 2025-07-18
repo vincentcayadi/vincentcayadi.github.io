@@ -11,7 +11,7 @@ import { themeConfig } from '@/config'
       stroke-linecap="round"
       stroke-linejoin="round"></path>
   </svg>
-  index
+  back
 </a>
 
 <script
@@ -91,17 +91,21 @@ import { themeConfig } from '@/config'
     margin-bottom: 2.5em;
     padding: 0;
     left: -0.175em;
-    transition: color 0.2s ease-out;
     text-decoration: none;
+    transition:
+      transform 0.2s ease,
+      color 0.2s ease;
   }
 
   .back-button:hover {
     color: var(--text-primary);
+    transform: translateX(0.25rem);
   }
 
   @media (hover: none) and (pointer: coarse) {
     .back-button:hover {
       color: var(--text-secondary);
+      transform: none;
     }
   }
 

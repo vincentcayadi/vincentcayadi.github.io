@@ -5,13 +5,16 @@ pubDate: Jul 17 2025
 
 ## Introduction
 
-Before I continue, I have to emphazie that **I DO NOT** condone piracy or any illegal activities. This article is purely for educational purposes and should not be used for any illegal activities. Any examples used in this blog post are used with consent and used in my local machine. If yall get caught pirvating im not responsible when yall go to jail ah.
+Before I continue, I have to emphazie that **I DO NOT** condone piracy or any illegal activities. This blog post is purely for educational purposes and should not be used for any illegal activities. Any examples used in this blog post are used with consent and used in my local machine. If yall get caught sailing the seven seas im not responsible when yall go to jail ah.
+
+---
 
 ## Ways of Serving Video on the Web
 
 Before we dive into the main content, let’s look at how video is typically delivered online:
 
 ### 1. Progressive download
+
 - A single video file (e.g. MP4) sits on a web server or CDN.
 
 - The browser/player starts downloading from the beginning and can play as data arrives.
@@ -42,7 +45,10 @@ Before we dive into the main content, let’s look at how video is typically del
 
 In this section we are going to mainly focus on HLS.
 
+---
+
 ## File Download
+
 When you try to fetch an HLS playlist directly, you’ll often run into a “403 Forbidden” error:
 
 ```bash
@@ -89,6 +95,7 @@ curl 'https://example.com/link-to-m3u8-file/video.m3u8' \
   -H 'Cookie: this-is-a-random-cookie'
 ```
 
+---
 
 ## Download & Merge the Segments
 
@@ -106,7 +113,8 @@ video1.ts
 #EXTINF:4.000000,
 video15.ts
 ```
-To grab every *.ts file and stitch them into one video:
+
+To grab every `*.ts` file and stitch them into one video:
 
 ```bash
 # 1. Generate a list of segment files for FFmpeg

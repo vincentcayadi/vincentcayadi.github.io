@@ -6,6 +6,10 @@
       "dependencies": {
         "@astrojs/mdx": "^4.3.0",
         "@astrojs/sitemap": "^3.4.1",
+        "@fontsource-variable/inter": "^5.2.6",
+        "@fontsource/besley": "^5.2.6",
+        "@fontsource/inter": "^5.2.6",
+        "@fontsource/monaspace-radon": "^5.2.5",
         "@playform/inline": "^0.1.2",
         "astro": "^5.11.1",
         "astro-og-canvas": "^0.7.0",
@@ -131,6 +135,14 @@
     "@eslint/object-schema": ["@eslint/object-schema@2.1.6", "", {}, "sha512-RBMg5FRL0I0gs51M/guSAj5/e14VQ4tpZnQNWwuDT66P14I43ItmPfIZRhO9fUVIPOAQXU47atlywZ/czoqFPA=="],
 
     "@eslint/plugin-kit": ["@eslint/plugin-kit@0.3.3", "", { "dependencies": { "@eslint/core": "^0.15.1", "levn": "^0.4.1" } }, "sha512-1+WqvgNMhmlAambTvT3KPtCl/Ibr68VldY2XY40SL1CE0ZXiakFR/cbTspaF5HsnpDMvcYYoJHfl4980NBjGag=="],
+
+    "@fontsource-variable/inter": ["@fontsource-variable/inter@5.2.6", "", {}, "sha512-jks/bficUPQ9nn7GvXvHtlQIPudW7Wx8CrlZoY8bhxgeobNxlQan8DclUJuYF2loYRrGpfrhCIZZspXYysiVGg=="],
+
+    "@fontsource/besley": ["@fontsource/besley@5.2.6", "", {}, "sha512-b/cQlSx0O1hlwQ0rj3TyrDEZYNwpwk00a0t4UpW6mJj53VTZcwSShg6DyDggEDhCG6pNO/JmDXE6PJwYM//56g=="],
+
+    "@fontsource/inter": ["@fontsource/inter@5.2.6", "", {}, "sha512-CZs9S1CrjD0jPwsNy9W6j0BhsmRSQrgwlTNkgQXTsAeDRM42LBRLo3eo9gCzfH4GvV7zpyf78Ozfl773826csw=="],
+
+    "@fontsource/monaspace-radon": ["@fontsource/monaspace-radon@5.2.5", "", {}, "sha512-mG6ltrFW5BYmcoRvVIKboCORZu8BeGg6h5zV5rnwEmFcjv8Bltua3KOj6aOxWbrR4PYnKyR17lNqSsjR8kx4bQ=="],
 
     "@humanfs/core": ["@humanfs/core@0.19.1", "", {}, "sha512-5DyQ4+1JEUzejeK1JGICcideyfUbGixgS9jNgex5nqkW+cY7WZhxBigmieN5Qnw9ZosSNVC9KQKyb+GUaGyKUA=="],
 
